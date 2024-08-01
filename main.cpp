@@ -10,6 +10,7 @@
 #include "include/Utility.h"
 #include "include/ColasMM1.h"
 #include "include/ColasMMS.h"
+#include "include/ColasMMK1.h"
 
 using namespace std;
 
@@ -121,6 +122,29 @@ void queues()
 
                 delete modelo;
                 
+            }
+        }
+        else if (method == 2)
+        {
+
+        }
+        else 
+        {
+            // MMK1 Model
+            if (servers == 1)
+            {
+                Colas* modelo = new ColasMMK1(static_cast<double>(lambda), static_cast<double>(miu), cost_service, cost_wait, static_cast<double>(K));
+                modelo->calculate();
+
+                cout << "Results for M/M/K/1 model: " << endl << endl;
+                modelo->printData();
+
+                delete modelo;
+            }
+            // MMKS Model
+            else 
+            {
+
             }
         }
 
