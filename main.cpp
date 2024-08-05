@@ -222,4 +222,152 @@ void forecasts()
 
 void inventory()
 {
+    // Basic Data Variables
+    double D = 0, L = 0, i = 0, P = 0, Co = 0, Ch = 0, Cs = 0;
+    int option, method;
+    bool confirmation = false;
+    char confirmation_message;
+    string message;
+
+    // Gathering data
+    D = utility.getDouble("Enter D (Demand): ");
+    Co = utility.getDouble("Enter Co (Unit Order Cost): ");
+
+    message = "\nHow you want to insert the price? \n";
+    message.append("1- Ch\n");
+    message.append("2- i and P\n");
+    message.append("\nOption: ");
+
+    do
+    {
+        option = utility.getInt(message);
+    } while(option < 1 || option > 2);
+    
+    // We are going to save Ch directly
+    if (option == 1)
+    {
+        Ch = utility.getDouble("Enter Ch (Unit Storage Cost): ");
+    }
+    else if (option == 2)
+    {
+        i =  utility.getDouble("Enter i (Interest Cost per unit): ");
+        P = utility.getDouble("Enter P (Unit Price): ");
+    }
+    else 
+    {
+        return;
+    }
+
+    // Choosing method
+    message = "\nEnter Method. \n";
+    message.append("1- EOQ without Missings\n");
+    message.append("2- EOQ with Missings\n");
+    message.append("3- EOQ with Discounts\n");
+    message.append("\nMethod: ");
+
+    do
+    {
+        method = utility.getInt(message);
+    } while (method < 1 || method > 3);
+
+    // Verification of method
+    if (utility.getMethodEOQ(method) == "")
+    {
+        return;
+    }
+
+    if (method == 2)
+    {
+        Cs = utility.getDouble("Enter Cs (Unit Missing Cost): ");
+    }
+
+    // Printing values for post user verification
+    cout << "\nVerifiy your data." << endl << endl;
+    cout << "D: " << D << endl;
+    cout << "Co: " << Co << endl;
+
+    if (option == 1)
+    {
+        cout << "Ch: " << Ch << endl;
+    }
+    else if (option == 2)
+    {
+        cout << "i: " << i << endl;
+        cout << "P: " << P << endl;
+    }
+
+    message = "Selected Method: ";
+    message.append(utility.getMethodEOQ(method));
+
+    if (method == 2)
+    {
+        cout << "Cs: " << Cs << endl;
+    }
+
+    cout << "\nConfirm Data (Y/N): ";
+    cin >> confirmation_message;
+
+    if (!(tolower(confirmation_message) == 'y'))
+    {
+        return;
+    }
+
+    // In case user wants to continue with the calculation
+    // We proceed to create the object
+
+    try
+    {
+        
+        if (method == 1)
+        {
+            if (option == 1)
+            {
+                return;
+            }
+
+            if (option == 2)
+            {
+                return;
+            }
+        }
+
+        if (method == 2)
+        {
+            if (option == 1)
+            {
+                return;
+            }
+
+            if (option == 2)
+            {
+                return;
+            }
+        }
+
+        if (method == 3)
+        {
+            if (option == 1)
+            {
+                return;
+            }
+
+            if (option == 2)
+            {
+                return;
+            }
+        }
+    }
+    catch (const invalid_argument &e)
+    {
+        cerr << "Error: " << e.what() << endl;
+    }
+    catch (const out_of_range &e)
+    {
+        cerr << "Error: " << e.what() << endl;
+    }
+    catch (...)
+    {
+        cerr << "Unkown Error." << endl;
+    }
+    
 }

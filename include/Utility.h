@@ -77,6 +77,27 @@ public:
         return message;
     }
 
+    string getMethodEOQ(const int method)
+    {
+
+        if (method == 1)
+        {
+            return "EOQ without Missings"; 
+        }
+        
+        if (method == 2)
+        {
+            return "EOQ with Missings";
+        }
+
+        if (method == 3)
+        {
+            return "EOQ with Discounts";
+        }
+
+        return "";
+    }
+
     double factorial(const int n)
     {
         double factorial = 1.0;
