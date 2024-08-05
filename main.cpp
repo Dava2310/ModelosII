@@ -11,6 +11,7 @@
 #include "include/ColasMM1.h"
 #include "include/ColasMMS.h"
 #include "include/ColasMMK1.h"
+#include "include/ColasMMKS.h"
 
 using namespace std;
 
@@ -18,14 +19,57 @@ using namespace std;
 void forecasts();
 void queues();
 void inventory();
+void menu();
 
 Utility utility;
 
 int main()
 {
-    system("cls");
-    queues();
+    // Menu of Options
+    cout << "This program is a help for the Modelos II subject!" << endl << endl;
+    menu();
+    cout << "Thanks for using this program! By: Dava2310" << endl << endl;
     system("pause");
+}
+
+void menu()
+{
+    
+    int option = 0;
+    do
+    {
+        system("pause");
+        system("cls");
+        // Items of the Menu
+        cout << "\t\t MENU" << endl << endl;
+        cout << "1- Calculate Queues" << endl;
+        cout << "2- Calculate Forecasts" << endl;
+        cout << "3- Calculate Inventory" << endl;
+        cout << "4- Exit" << endl << endl;
+
+        option = utility.getInt("Insert a valid option between 1 and 4: ");
+
+        switch (option)
+        {
+        case 1:
+            queues();
+            break;
+        case 2:
+            forecasts();
+            break;
+        case 3:
+            inventory();
+            break;
+        case 4:
+            return;
+            break;
+        default:
+            cout << "Chose an option between 1 and 4" << endl << endl;
+            break;
+        }
+
+    } while (option != 4);
+    
 }
 
 void queues()
@@ -110,6 +154,7 @@ void queues()
                 modelo->printData();
 
                 delete modelo;
+                return;
             }
             // MMS method
             else 
@@ -121,12 +166,12 @@ void queues()
                 modelo->printData();
 
                 delete modelo;
-                
+                return;
             }
         }
         else if (method == 2)
         {
-
+            return;
         }
         else 
         {
@@ -140,11 +185,19 @@ void queues()
                 modelo->printData();
 
                 delete modelo;
+                return;
             }
             // MMKS Model
             else 
             {
+                Colas* modelo = new ColasMMKS(static_cast<double>(lambda), static_cast<double>(miu), cost_service, cost_wait, static_cast<double>(K), servers);
+                modelo->calculate();
 
+                cout << "Results for M/M/K/S model: " << endl << endl;
+                modelo->printData();
+
+                delete modelo;
+                return;
             }
         }
 
